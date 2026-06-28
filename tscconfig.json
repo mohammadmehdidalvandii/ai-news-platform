@@ -19,6 +19,9 @@
       "noImplicitReturns": true,
       "noFallthroughCasesInSwitch": true,
       "moduleResolution": "node",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "useDefineForClassFields": false,
       "baseUrl": ".",
       "paths": {
         "@modules/*": ["src/modules/*"],

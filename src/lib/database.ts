@@ -1,9 +1,8 @@
-import {Sequelize} from 'sequelize-typescript';
+import {Sequelize} from 'sequelize';
 import {config} from '../config/index';
 
 const sequelize = new Sequelize(config.database.url ,{
     dialect:'postgres',
-    models:[__dirname + '/../modules/*/*.model.ts'],
     logging:config.app.env === 'development' ? console.log : false,
     pool:{
         max:5,
