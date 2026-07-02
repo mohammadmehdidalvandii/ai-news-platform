@@ -35,7 +35,7 @@ AI News Platform automatically collects articles from trusted tech RSS sources, 
 | Runtime | Node.js 18+ |
 | Framework | Express.js |
 | Bot | Telegraf |
-| Database | PostgreSQL + Prisma |
+| Database | PostgreSQL + Sequelize |
 | AI | OpenAI GPT-4o-mini |
 | Scheduler | node-cron |
 
