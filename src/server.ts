@@ -1,3 +1,4 @@
+import { startBot } from '@modules/telegram';
 import app from './app';
 import {config} from './config/index';
 import {connectDatabase} from './lib/database';
@@ -8,6 +9,8 @@ const start = async ():Promise<void>=>{
     app.listen(config.app.port , ()=>{
         console.log(`✅ Server is running on ${config.app.url}`);
     });
+
+    await startBot();
 };
 
 
