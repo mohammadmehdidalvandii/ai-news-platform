@@ -1,20 +1,35 @@
 import { DataTypes, Model , Optional} from 'sequelize';
 import sequelize from '../../lib/database';
 
+export enum OnboardingStep{
+    STARTED = 'started',
+    WAITING_EMAIL = 'waiting_email',
+    COMPLETED ='completed',
+}
+
+export enum InterestCategory{
+    AI = 'ai',
+    PROGRAMMING = 'programming',
+    SECURITY = 'security',
+    MOBILE = 'mobile',
+}
+
 interface UserAttributes {
     id: number;
     telegramId: string;
     username: string | null;
     firstName: string | null;
     lastName: string | null;
-    email: string;
+    email: string | null;
+    interests:InterestCategory[];
+    onboardingStep:OnboardingStep;
     isActive: boolean;
     isPremium: boolean;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-type UserCreationAttribute = Optional<UserAttributes , 'id'>;
+type UserCreationAttribute = Optional<UserAttributes , 'id' | 'email' | 'interests' | 'onboardingStep'>;
 
 const User = sequelize.define<Model<UserAttributes , UserCreationAttribute>>(
     'User',
@@ -44,10 +59,20 @@ const User = sequelize.define<Model<UserAttributes , UserCreationAttribute>>(
         email:{
             type:DataTypes.STRING,
             unique:true,
-            allowNull:false,
+            allowNull:true,
             validate:{
                 isEmail:true,
             },
+        },
+        interests:{
+            type: DataTypes.JSON,
+            allowNull:false,
+            defaultValue:[],
+        },
+        onboardingStep:{
+            type: DataTypes.ENUM(...Object.values(OnboardingStep)),
+            allowNull:false,
+            defaultValue:OnboardingStep.STARTED
         },
         isActive:{
             type:DataTypes.BOOLEAN,
