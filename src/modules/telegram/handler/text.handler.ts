@@ -19,7 +19,7 @@ export const textHandler = async (ctx:Context): Promise<void>=>{
 
     const email = message.text.trim();
     if(!EMAIL_REGEX.test(email)){
-        await ctx.reply('❌ فرمت ایمیل درست نیست. لطفاً یه ایمیل معتبر بفرست (مثلاً example@mail.com):')
+        await ctx.reply('❌ فرمت ایمیل درست نیست. لطفاً یه ایمیل معتبر بفرست (مثلاً example@gmail.com):')
         return;
     }
 
