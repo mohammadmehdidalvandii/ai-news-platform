@@ -1,14 +1,20 @@
 import OpenAI from "openai";
+import { fetch as undiciFetch } from 'undici';
 import { config } from "@config/index";
+import { undiciProxyAgent } from "@lib/proxyAgent";
 
 const openai = new OpenAI({
     apiKey:config.openai.apiKey,
     baseURL: 'https://openrouter.ai/api/v1',
+    fetch: undiciFetch as unknown as typeof fetch,
+    fetchOptions: {
+      dispatcher: undiciProxyAgent,
+    },
 });
 
 
 export interface TranslationResult{
-    title: string;
+    titleFa: string;
     translatedContent: string;
     summary: string;
 };
