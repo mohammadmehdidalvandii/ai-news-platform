@@ -15,12 +15,14 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@mozilla/readability": "^0.6.0",
     "axios": "^1.18.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.2",
     "helmet": "^8.2.0",
+    "jsdom": "^29.1.1",
     "node-cron": "^4.5.0",
     "openai": "^6.45.0",
     "pg": "^8.22.0",
@@ -37,6 +39,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsdom": "^28.0.3",
     "@types/node": "^26.0.1",
     "@types/node-cron": "^3.0.11",
     "eslint": "^10.6.0",

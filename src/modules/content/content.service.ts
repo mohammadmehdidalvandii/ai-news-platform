@@ -1,14 +1,15 @@
 import slugify from 'slugify';
 import { Op } from 'sequelize';
-import Article from './article.model';
+import Article from './article.model'; 
 import { fetchAllFeeds } from './rss.services';
+import { extractFullContent } from './articleExtractor.service';
 
 const titleSimilarity = (a: string, b: string): number => {
   const normalize = (text: string): Set<string> =>
     new Set(
       text
         .toLowerCase()
-        .replace(/[^\p{L}\p{N}\s]/gu, '')
+        .replace(/[^\p{L}\p{N}\s]/gu, '') 
         .split(/\s+/)
         .filter(Boolean)
     );
@@ -21,7 +22,7 @@ const titleSimilarity = (a: string, b: string): number => {
   return union.size === 0 ? 0 : intersection.size / union.size;
 };
 
-const SIMILARITY_THRESHOLD = 0.75;
+const SIMILARITY_THRESHOLD = 0.75; 
 
 const isDuplicateByTitle = async (title: string): Promise<boolean> => {
   const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
@@ -54,6 +55,7 @@ export const collectAndSaveArticles = async (): Promise<number> => {
   let savedCount = 0;
 
   for (const item of items) {
+    
     const existsByUrl = await Article.findOne({ where: { sourceUrl: item.link } });
     if (existsByUrl) continue;
 
@@ -61,13 +63,16 @@ export const collectAndSaveArticles = async (): Promise<number> => {
 
     const slug = await generateUniqueSlug(item.title);
 
+    const fullContent = await extractFullContent(item.link);
+    const contentToSave = fullContent ?? item.content;
+
     try {
       await Article.create({
         title: item.title,
         slug,
         source: item.source,
         sourceUrl: item.link,
-        originalContent: item.content,
+        originalContent: contentToSave,
         publishedAt: item.publishedAt,
       });
       savedCount += 1;
